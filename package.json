@@ -1,0 +1,59 @@
+{
+  "name": "huga",
+  "version": "0.0.1",
+  "description": "Huga application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "startDev": "NODE_ENV=development ./node_modules/.bin/webpack-dev-server --config webpack/webpack.local.js --hot --inline",
+    "startServer": "DEBUG=express NODE_ENV=production ./node_modules/.bin/webpack --config webpack/webpack.server.js && node ./dist/server.bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SunhoY/huga.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SunhoY/huga/issues"
+  },
+  "homepage": "https://github.com/SunhoY/huga#readme",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "express": "~4.15.5",
+    "http-status": "^1.0.1",
+    "https": "^1.0.0",
+    "moment": "^2.21.0",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
+    "react-datetime": "^2.14.0",
+    "react-dom": "^16.2.0",
+    "react-helmet": "^5.2.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "serve-favicon": "~2.4.5"
+  },
+  "devDependencies": {
+    "app-root-path": "^2.0.1",
+    "axios-mock-adapter": "^1.12.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "chai": "^4.1.2",
+    "html-webpack-plugin": "^2.30.1",
+    "mocha": "^5.0.0",
+    "node-mocks-http": "^1.6.6",
+    "sinon": "^4.2.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1",
+    "webpack-node-externals": "^1.6.0"
+  }
+}
