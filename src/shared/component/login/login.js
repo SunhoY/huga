@@ -1,19 +1,42 @@
 import React, {Component} from 'react';
-import {LoginView} from "./login-view";
+import {LoginForm} from "./login-form";
+import {login} from "../../redux/action/member/member-action";
+import {connect} from "react-redux";
+import {Redirect} from "react-router-dom";
 
-export class Login extends Component {
-    constructor(props)  {
+class Login extends Component {
+    constructor(props) {
         super(props);
 
-        this.onLoginSubmit = this.onLoginSubmit.bind(this);
+        this.loginMember = this.loginMember.bind(this);
     }
 
-    onLoginSubmit(e) {
-        alert("OK");
-        e.preventDefault();
+    async loginMember(email, password) {
+        try {
+            this.props.dispatch(login(email, password));
+        } catch (error) {
+            alert('Email 또는 Password 가 올바르지 않습니다.');
+        }
     }
 
     render() {
-        return <LoginView onLoginSubmit={this.onLoginSubmit}/>
+        const {memberRole} = this.props;
+
+        return (
+            <div>
+                <LoginForm onSubmit={this.loginMember}/>
+                {memberRole !== undefined && <Redirect to='/my-page'/>}
+            </div>
+        )
     }
 }
+
+const mapStateToProps = (state) => {
+    let {member: {role}} = state;
+
+    return {memberRole: role}
+};
+
+let ConnectedLogin = connect(mapStateToProps)(Login);
+
+export {ConnectedLogin};

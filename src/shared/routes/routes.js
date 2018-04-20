@@ -1,5 +1,6 @@
-import {Login} from "../component/login/login";
+import {ConnectedLogin} from "../component/login/login";
 import {Join} from "../component/join/join";
+import {ConnectedMyPage} from "../component/my-page/my-page";
 
 const createRoute = (path, component, exact = true) => ({
     path,
@@ -8,6 +9,8 @@ const createRoute = (path, component, exact = true) => ({
 });
 
 export const routes = [
-    createRoute('/', Login),
-    createRoute('/user/join', Join),
+    createRoute('/', ConnectedLogin),
+    createRoute('/member/join', Join),
+    createRoute('/my-page', ConnectedMyPage),
+    createRoute('/leave/application', LeaveApplication)
 ];

@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import {createServer} from "https";
 import {renderToString} from 'react-dom/server';
 import {StaticRouter as Router, matchPath} from "react-router";
 import {createStore, applyMiddleware} from 'redux';
@@ -13,14 +12,10 @@ import express from 'express';
 import {reducers} from "./shared/redux/reducer";
 import cookieParser from 'cookie-parser';
 import helmet from 'react-helmet';
-import {asyncMiddleware} from "./middleware/async-middleware";
-import {cookieInjector} from './stub/cookie-injector';
-import fs from 'fs';
 
 let app = express();
 
 app.use(cookieParser());
-app.use(asyncMiddleware(cookieInjector));
 
 app.get('*', async (req, res) => {
     const store = createStore(reducers, {}, applyMiddleware(thunk));
@@ -39,7 +34,7 @@ app.get('*', async (req, res) => {
     }
 
     if(!component.fetchData) {
-        component.fetchData = new Promise(resolve => resolve());
+        component.fetchData = () => Promise.resolve();
     }
 
     await component.fetchData({store, params: foundPath === null ? {} : foundPath.params});
@@ -66,12 +61,7 @@ app.get('*', async (req, res) => {
     }
 });
 
-let options = {
-    key: fs.readFileSync('key.pem'),
-    cert: fs.readFileSync('cert.pem')
-};
-
-createServer(options, app).listen(3000, () => {
+app.listen(4000, () => {
     console.log("listening..")
 });
 
@@ -85,6 +75,7 @@ const renderPage = (html, preloadedState, helmetData) => `
         <meta name="format-detection" content="telephone=no">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover, user-scalable=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     </head>
     
     <body>

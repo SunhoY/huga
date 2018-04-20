@@ -2,10 +2,11 @@ const appRoot = require('app-root-path').path;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: `${appRoot}/src/browser.js`,
+    entry: ['babel-polyfill', `${appRoot}/src/browser.js`],
     output: {
         path: `${appRoot}/dist`,
-        filename: 'dev.bundle.js'
+        filename: 'dev.bundle.js',
+        publicPath: "/"
     },
     module: {
         rules: [
@@ -21,6 +22,7 @@ module.exports = {
             template: `${appRoot}/src/html/template.html`
         }),
     ],
+    devtool: "source-map",
     devServer: {
         proxy: {
             "/api": {

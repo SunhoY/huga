@@ -1,32 +1,37 @@
 import React, {Component} from 'react';
-import {createUser} from '../../service/user-service';
+import {registerNewMember} from '../../service/member-service';
 import {Redirect} from 'react-router';
-import {CREATED} from 'http-status';
-import {JoinView} from "./join-view";
-import {Login} from "../login/login";
+import {JoinForm} from "./join-form";
+import {createMember} from "../../model/member";
 
 export class Join extends Component {
     constructor(props) {
         super(props);
 
-        this.onSubmitJoin = this.onSubmitJoin.bind(this);
+        this.onJoinSubmit = this.onJoinSubmit.bind(this);
         this.state = {
             created: false
         }
     }
 
-    onSubmitJoin(user) {
-        let result = createUser(user);
+    async onJoinSubmit(email, firstName, lastName) {
+        const newMember = createMember(email, firstName, lastName);
 
-        if(result.status === CREATED) {
-            this.setState({created: true});
+        try {
+            await registerNewMember(newMember);
+
+            this.setState({created: true}, () => {
+                alert('성공적으로 생성되었습니다. 관리자에게 등급업을 요청하세요.');
+            });
+        } catch (error) {
+            alert('실패하였습니다.');
         }
     }
 
     render() {
         return <div>
-            <JoinView/>
-            {this.state.created && <Redirect to={Login} />}
+            <JoinForm onSubmit={this.onJoinSubmit}/>
+            {this.state.created && <Redirect to='/' />}
         </div>
     }
 }

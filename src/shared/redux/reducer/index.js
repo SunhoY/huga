@@ -1,4 +1,5 @@
-import {myInfoReducer} from "./my-info/my-info-reducer";
+import {leaveReducer} from "./leave/leave-reducer";
 import {combineReducers} from 'redux';
+import {memberReducer} from "./member/member-reducer";
 
-export const reducers = combineReducers({myInfo: myInfoReducer});
+export const reducers = combineReducers({leaves: leaveReducer, member: memberReducer});
